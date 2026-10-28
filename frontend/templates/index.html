@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Posting Agent Dashboard</title>
+  <style>
+    body {font-family: Arial, sans-serif; margin: 2rem;}
+    .section {margin-bottom: 1.5rem;}
+    pre {background:#f4f4f4; padding:1rem; overflow:auto;}
+  </style>
+</head>
+<body>
+  <h1>Posting Agent Dashboard</h1>
+  <div class="section">
+    <h2>Latest Trace</h2>
+    {% if trace %}
+    <pre>{{ trace | tojson(indent=2) }}</pre>
+    {% else %}
+    <p>No trace data available.</p>
+    {% endif %}
+  </div>
+  <div class="section">
+    <h2>Metrics</h2>
+    {% if metrics %}
+    <pre>{{ metrics | tojson(indent=2) }}</pre>
+    {% else %}
+    <p>No metrics available.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

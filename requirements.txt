@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+jinja2
+pandas
+playwright
+flask
+pydantic
+httpx
+python-dotenv

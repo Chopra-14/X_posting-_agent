@@ -1,0 +1,7 @@
+FROM mcr.microsoft.com/playwright/python:v1.64.1-jammy
+WORKDIR /app
+COPY src/ ./src/
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+ENV PYTHONUNBUFFERED=1
+CMD ["python", "-m", "src.main"]

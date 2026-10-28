@@ -1,0 +1,5 @@
+{
+  "task_completion_rate": 1.0,
+  "groundedness_score": 1.0,
+  "guardrail_trigger_rate": 0.0
+}

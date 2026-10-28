@@ -1,0 +1,53 @@
+
+
+services:
+  mock_social:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+    container_name: mock_social
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/login"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./data:/app/data
+
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    container_name: agent_service
+    env_file:
+      - .env
+    depends_on:
+      mock_social:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
+    command: ["python", "-m", "src.main"]
+    healthcheck:
+      test: ["CMD", "cat", "/app/data/traces.jsonl"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+    container_name: frontend_service
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./frontend:/app/frontend
+    command: ["python", "frontend/app.py"]
+    ports:
+      - "5000:5000"
+    depends_on:
+      agent:
+        condition: service_started
